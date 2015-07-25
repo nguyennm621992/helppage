@@ -1,0 +1,18 @@
+<div class="row" style="padding: 0px 15px;">
+    <div class="col-lg-12" style="background: #fff;">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div ng-repeat="item in pageData.result">
+                    <div class="hr-line-dashed"></div>
+                    <div class="search-result">
+                        <h3><a ui-sref="help.menu({'menuId': {{item.id}}})">{{item.name}}</a></h3>
+                        <p class="search-link" ng-bind="item.direct"></p>
+                    </div>
+                </div>
+                <div ng-if="(pageData.total / pageData.limit) > 1" class="text-center">
+                    <pagination boundary-links="true" total-items="pageData.total" items-per-page="pageData.limit" ng-model="pageData.curPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

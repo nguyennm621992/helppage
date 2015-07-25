@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="hpanel">
+            <div class="v-timeline vertical-container" animate-panel child="vertical-timeline-block" delay="3">
+                <div class="vertical-timeline-block" ng-repeat="item in feedbackItems" >
+                    <div class="vertical-timeline-icon navy-bg">
+                        <i ng-if="item.helpful" class="fa fa-thumbs-o-up text-success"></i>
+                        <i ng-if="!item.helpful" class="fa fa-thumbs-o-down text-danger"></i>
+                    </div>
+                    <div class="vertical-timeline-content">
+                        <div class="p-sm">
+                            <span class="vertical-date pull-right"> {{item.dayOfWeek}} <br/> <small>{{item.date}}</small> </span>
+                            <h2><a ui-sref="help.menu({'menuId': {{item.menuid}}})">{{item.menuname}}</a></h2>
+                            <p>{{item.message}}
+                            </p>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="tag-feedback"><span ng-if="item.accurate" class="label label-warning">{{::lang.hp_no_accur}}</span></div>
+                            <div class="tag-feedback"><span ng-if="item.depth" class="label label-warning">{{::lang.hp_no_depth}}</span></div>
+                            <div class="tag-feedback"><span ng-if="item.more_examples" class="label label-warning">{{::lang.hp_need_exam}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

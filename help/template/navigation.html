@@ -1,0 +1,109 @@
+<div id="navigation">
+    <ul side-navigation class="nav" id="side-menu" ui-sortable="sortableOptions" ng-model="menuTree">
+        <li ng-repeat="item in menuTree" 
+            ng-attr-ui-sref-active="{{item.children === undefined ? 'active' : ''}}"
+            ng-class="{active: (item.children !== undefined && $state.includes('help.menu') && checkRelation($stateParams.menuId, item.id)) || (item.children === undefined && addMenuId == item.id)}">
+            <!-- item has not children-->
+            <a draggable="false" ng-if="item.children === undefined" ng-click="clickOnTab(item);" ui-sref="help.menu({'menuId': {{item.id}}})">
+                <span class="menu-label" ng-if="!item.editting" ng-bind="item.name" tooltip-placement="bottom" tooltip="{{item.name}}"></span>
+                <input stop-event ng-keypress="accessNewName(item, $event)" ng-model="item.editname" class="edit-menu-name" ng-if="item.editting"></input>
+                <span ng-if="addMenuId == item.id" class="fa arrow"></span>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="addMenu(item.id, false)" class="fa fa-plus-square"></i>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="removeMenu(item.id)" class="fa fa-minus-square"></i>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="editMenu(item)" class="fa fa-edit"></i>
+                <i stop-event ng-click="cancelNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-times text-danger"></i>
+                <i stop-event ng-click="accessNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-check text-success"></i>
+            </a>
+            <ul ng-if="!is_viewer && item.children === undefined && addMenuId == item.id" class="nav nav-second-level">
+                <li>
+                    <a class="input-field">
+                        <input type="text" ng-keypress="addNewMenu($event)" ng-model="newMenu.name" class="edit-menu-name">
+                        <i ng-click="addNewMenu()" class="fa fa-check text-success"></i>
+                        <i ng-click="cancelNewMenu()" class="fa fa-times text-danger"></i>
+                    </a>            
+                </li>
+            </ul>
+
+            <!-- item has children-->
+            <a ng-if="item.children !== undefined" id="menu_{{item.id}}" ng-click="clickOnTab(item);">
+                <span class="menu-label" ng-if="!item.editting" ng-bind="item.name" tooltip-placement="bottom" tooltip="{{item.name}}"></span>
+                <input stop-event ng-keypress="accessNewName(item, $event)" ng-model="item.editname" class="edit-menu-name" ng-if="item.editting"></input>
+                <span class="fa arrow"></span>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="addMenu(item.id, true)" class="fa fa-plus-square"></i>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="removeMenu(item.id)" class="fa fa-minus-square"></i>
+                <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="editMenu(item)" class="fa fa-edit"></i>
+                <i stop-event ng-click="cancelNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-times text-danger"></i>
+                <i stop-event ng-click="accessNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-check text-success"></i>
+            </a>
+            <ul ng-if="item.children !== undefined" class="nav nav-second-level" ui-sortable="sortableOptions" ng-model="item.children"
+                ng-class="{in: $state.includes('help.menu') && checkRelation($stateParams.menuId, item.id)}" ng-include="'nestable_item.html'">
+            </ul>
+        </li>
+    </ul>
+    <div ng-if="!is_viewer && addMenuId != '0'" class="btn-add-menu">
+        <a class="icons-box" ng-click="addMenu('0', false)">
+            <span class="infont">
+                <i class="fa fa-plus-circle text-success"></i>
+            </span>
+        </a>
+    </div>
+    <div ng-if="!is_viewer && addMenuId == '0'" class="field-add-menu">
+        <a class="input-field">
+            <input type="text" ng-keypress="addNewMenu($event)" ng-model="newMenu.name" class="ng-pristine ng-untouched ng-valid col-sm-9">
+            <div class="col-sm-3">
+                <i stop-event ng-click="addNewMenu()" class="fa fa-check text-success"></i>
+                <i stop-event ng-click="cancelNewMenu()" class="fa fa-times text-danger"></i>
+            </div>
+        </a>
+    </div>
+</div>
+<script type="text/ng-template" id="nestable_item.html">
+    <li ng-if="!is_viewer && addMenuId == item.id"> 
+        <a class="input-field">
+            <input type="text" ng-keypress="addNewMenu($event)" ng-model="newMenu.name" class="edit-menu-name">
+            <i ng-click="addNewMenu()" class="fa fa-check text-success"></i>
+            <i ng-click="cancelNewMenu()" class="fa fa-times text-danger"></i>
+        </a>
+    </li>
+    <li ng-repeat="item in item.children"
+        ng-attr-ui-sref-active="{{item.children === undefined ? 'active' : ''}}" 
+        ng-class="{active: (item.children !== undefined && $state.includes('help.menu') && checkRelation($stateParams.menuId, item.id)) || (item.children === undefined && addMenuId == item.id)}">
+        <!-- item has not children-->
+        <a draggable="false" ng-if="item.children === undefined" ng-click="clickOnTab(item)" ui-sref="help.menu({'menuId': {{item.id}}})">
+            <span class="left-sign">ㄴ</span>
+            <div class="menu-label" ng-if="!item.editting" ng-bind="item.name" tooltip-placement="bottom" tooltip="{{item.name}}"></div>
+            <input stop-event ng-keypress="accessNewName(item, $event)" ng-model="item.editname" class="edit-menu-name" ng-if="item.editting"></input>
+            <span ng-if="addMenuId == item.id" class="fa arrow"></span>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="addMenu(item.id, false)" class="fa fa-plus-square"></i>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="removeMenu(item.id)" class="fa fa-minus-square"></i>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="editMenu(item)" class="fa fa-edit"></i>
+            <i stop-event ng-click="cancelNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-times text-danger"></i>
+            <i stop-event ng-click="accessNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-check text-success"></i>
+        </a>
+        <ul ng-if="!is_viewer && item.children === undefined && addMenuId == item.id" class="nav nav-second-level">
+            <li>
+                <a class="input-field">
+                    <input type="text" ng-keypress="addNewMenu($event)" ng-model="newMenu.name" class="edit-menu-name">
+                    <i ng-click="addNewMenu()" class="fa fa-check text-success"></i>
+                    <i ng-click="cancelNewMenu()" class="fa fa-times text-danger"></i>
+                </a>
+            </li>
+        </ul>
+
+        <!-- item has children-->
+        <a ng-if="item.children !== undefined" id="menu_{{item.id}}" ng-click="clickOnTab(item);">
+            <span class="left-sign">ㄴ</span>
+            <div class="menu-label" ng-if="!item.editting" ng-bind="item.name" tooltip-placement="bottom" tooltip="{{item.name}}"></div>
+            <input stop-event ng-keypress="accessNewName(item, $event)" ng-model="item.editname" class="edit-menu-name" ng-if="item.editting"></input>
+            <span class="fa arrow"></span>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="addMenu(item.id, true)" class="fa fa-plus-square"></i>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="removeMenu(item.id)" class="fa fa-minus-square"></i>
+            <i stop-event ng-if="!is_viewer && addMenuId !== item.id && !item.editting" ng-click="editMenu(item)" class="fa fa-edit"></i>
+            <i stop-event ng-click="cancelNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-times text-danger"></i>
+            <i stop-event ng-click="accessNewName(item)" ng-if="!is_viewer && item.editting" class="fa fa-check text-success"></i>
+        </a>
+        <ul ng-if="item.children !== undefined" class="nav" style="padding-left: 10px;" ui-sortable="sortableOptions" ng-model="item.children"
+            ng-class="{in: $state.includes('help.menu') && checkRelation($stateParams.menuId, item.id)}" ng-include="'nestable_item.html'">
+        </ul>
+    </li>
+</script>  

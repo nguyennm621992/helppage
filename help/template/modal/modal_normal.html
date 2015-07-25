@@ -1,0 +1,14 @@
+<div class="inmodal">
+    <div class="color-line"></div>
+    <div class="modal-header">
+        <h4 class="modal-title" ng-bind="title"></h4>
+        <small class="font-bold" ng-bind="subTitle" ng-if="!subTitle"></small>
+    </div>
+    <div class="modal-body">
+        <p ng-bind-html="formatHtml(body)"></p>
+    </div>
+    <div class="modal-footer" ng-if="hasBtn">
+        <button ng-if="showOKBtn" type="button" class="btn btn-primary btn-danger2" ng-click="ok()">{{::lang.task_report_ok}}</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">{{::lang.task_report_close}}</button>
+    </div>
+</div>

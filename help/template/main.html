@@ -1,0 +1,16 @@
+<div ng-if="$stateParams.menuId != 'login' && $stateParams.menuId != 'register'">
+    <div id="header" ng-include="'template/header.html'"></div>
+
+    <!-- Navigation -->
+    <aside id="menu" ng-include="'template/navigation.html'"></aside>
+
+    <div id="wrapper" ui-view autoscroll="true" style="min-height: 830px;"></div>
+</div>
+
+<div ng-if="$stateParams.menuId == 'login'">
+    <ng-include src="loginUrl"></ng-include>
+</div>
+
+<div ng-if="$stateParams.menuId == 'register'">
+    <ng-include src="registerUrl"></ng-include>
+</div>

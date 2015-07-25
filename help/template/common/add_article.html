@@ -1,0 +1,21 @@
+<div class="inmodal">
+    <div class="color-line"></div>
+    <div class="modal-header">
+        <h4 class="modal-title" ng-bind="title"></h4>
+        <small class="font-bold" ng-bind="subTitle" ng-if="!subTitle"></small>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal ng-pristine ng-valid" method="" action="" name="articleForm">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                    <input class="form-control" ng-model="articleTitle" required type="text" name="title" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" ng-if="hasBtn">
+        <button type="button" ng-disabled="articleForm.$invalid" class="btn btn-primary btn-success" ng-click="ok()">Okay</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+    </div>
+</div>

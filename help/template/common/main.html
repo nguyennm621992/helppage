@@ -1,0 +1,79 @@
+<!-- Main Wrapper -->
+<div small-header class="normalheader transition">
+    <div ng-if="$stateParams.menuId != ''" class="hpanel" tour-step order="1" content="Place your page title and breadcrumb. Select small or large header or give the user choice to change the size." placement="bottom">
+        <div class="panel-body">
+            <a ng-click="small()" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+            </a>
+            <div ng-if="$stateParams.menuId != 'search'">
+                <div id="hbreadcrumb" class="pull-right m-t-lg">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li ng-if="!headTitle.name">Groupware</li>
+                        <li ng-if="headTitle.name">
+                            <a ui-sref="help.menu({'menuId': {{headTitle.id}}})" ng-click="clickOnHead()">{{headTitle.name}}</a>
+                        </li>
+                        <li ng-repeat="state in $state.$current.path" ng-switch="$last || !!state.abstract" ng-class="{active: $last}" ng-if="state.data.pageTitle !== 'GROUPWARE' && state.data.pageTitle != headTitle.name">
+                            <span>{{state.data.pageTitle}}</span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    {{ $state.current.data.pageTitle}}
+                </h2>
+                <span ng-if="!is_viewer && $stateParams.menuId != 'feedback' 
+                    && $stateParams.menuId != 'users'" 
+                    ng-click="addArticle()" class="label label-success" 
+                    title="{{::lang.hp_new_art}}" style="cursor: pointer;">{{::lang.hp_new_art}}</span>
+            </div>
+            <div ng-if="$stateParams.menuId == 'search' && !isBlocked">
+                <h2 class="font-light m-b-xs">
+                    {{pageData.total > 0 ? pageData.total : 'No'}} results found for: <span class="text-navy">”{{pageData.search}}”</span>
+                </h2>
+                <small ng-if="reqTime != 0">Request time  ({{reqTime / 1000}} seconds)</small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div ui-view animate-panel>
+        <div ng-if="exceptIds.indexOf($stateParams.menuId) == -1">
+            <h1 ng-bind="curMenuInfo.title"></h1>
+            <summer-note menu-id="{{curMenuInfo.id}}"></summer-note>
+        </div>
+        <div ng-if="$stateParams.menuId == headTitle.id">
+            <h1 ng-bind="headTitle.title"></h1>
+            <summer-note menu-id="{{headTitle.id}}"></summer-note>
+        </div>
+        <div ng-if="$stateParams.menuId == 'feedback'">
+            <ng-include src="feedbackUrl"></ng-include>
+        </div>
+        <div ng-if="$stateParams.menuId == 'search'">
+            <ng-include src="searchUrl"></ng-include>
+        </div>
+        <div ng-if="$stateParams.menuId == 'users'">
+            <ng-include src="usersUrl"></ng-include>
+        </div>
+    </div>
+    <!--Loading page -->
+    <div ng-if="$stateParams.menuId != '' && isBlocked">
+        <div class="splash-title">
+            <img src="images/loading-bars.svg" width="64" height="64" style="box-shadow: none;" /> 
+        </div>
+        <!--[if lt IE 7]>
+        <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    </div>
+    <!-- Simple splash screen-->
+    <div ng-if="$stateParams.menuId == '' && !isBlocked">
+        <div class="splash-title"><h1>{{::lang.hp_welcome_help}}</h1><p>{{::lang.hp_select_menu}}</p>
+            <img ng-src="{{configData.logo != undefined && configData.logo|| 'images/loading-bars.svg'}}" class="img-circle" width="64" height="64" /> 
+        </div>
+        <!--[if lt IE 7]>
+        <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    </div>
+</div>
+<!-- Footer -->
+<div ng-if="exceptFooter.indexOf($stateParams.menuId) == -1 && !isBlocked" id="footer" ng-include="'template/footer.html'"></div>

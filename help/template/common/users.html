@@ -1,0 +1,43 @@
+
+<div class="col-lg-12">
+    <div class="hpanel hgreen">
+        <div class="panel-heading hbuilt">
+            <a draggable="false" class="article-title">
+                <span>USERS LIST</span>
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Username </th>
+                            <th>Email</th>
+                            <th>Registered Date</th>
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in userList">
+                            <td ng-bind="item.id"></td>
+                            <td ng-bind="item.username"></td>
+                            <td ng-bind="item.email"></td>
+                            <td ng-bind="item.regdate"></td>
+                            <td ng-bind="item.active"></td>
+                            <td>
+                                <a ng-if="item.active == 'No'" ng-click="activeUser(item)" title="Active"><i class="fa fa-check text-success"></i></a>
+                                <a ng-if="item.active == 'Yes'" ng-click="disactiveUser(item)" title="Disactive"><i class="fa fa-times text-danger"></i></a>
+                                <a ng-click="deleteUser(item)" title="Delete"><i class="fa fa-trash-o" style="color: #a6a8a9;"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="(pagination.total / pagination.limit) > 1" class="text-center">
+                <pagination boundary-links="true" total-items="pagination.total" items-per-page="pagination.limit" ng-model="pagination.curPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            </div>
+        </div>
+    </div>
+</div>

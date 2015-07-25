@@ -1,0 +1,57 @@
+<div class="color-line"></div>
+<div class="pull-left m">
+    <a ui-sref="help.menu({'menuId': ''})" ng-click="splash()" class="btn btn-primary">{{::lang.hp_back_help}}</a>
+</div>
+<div class="register-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <h3>{{::lang.hp_registration}}</h3>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                        <form name="registerForm">
+                            <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>{{::lang.hp_username}}</label>
+                                <input type="text" ng-model="regisForm.username" required class="form-control" name="username">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>{{::lang.hp_password}}</label>
+                                <input type="password" ng-model="regisForm.password" required class="form-control" name="password">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>{{::lang.hp_repeat_pass}}</label>
+                                <input type="password" ng-model="regisForm.password2" required class="form-control" name="password2">
+                                <span ng-show="regisForm.password != '' && regisForm.password != regisForm.password2" 
+                                      class="help-block m-b-none text-danger">{{::lang.hp_not_pass}}</span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>{{::lang.hp_email}}</label>
+                                <input type="text" ng-model="regisForm.email" required class="form-control" name="email">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>{{::lang.hp_repeat_email}}</label>
+                                <input type="text" ng-model="regisForm.email2" required class="form-control" name="email2">
+                                <span ng-show="regisForm.email != '' && regisForm.email != regisForm.email2" 
+                                      class="help-block m-b-none text-danger">{{::lang.hp_not_email}}</span>
+                            </div>
+                            </div>
+                            <div class="text-center">
+                                <button ng-disabled="registerForm.$invalid || 
+                                    regisForm.password != regisForm.password2 || 
+                                    regisForm.email != regisForm.email2" 
+                                    class="btn btn-success" ng-click="register()">{{::lang.hp_register}}</button>
+                                <a class="btn btn-default" ui-sref="help.menu({'menuId': ''})" ng-click="splash()">{{::lang.hp_cancel}}</a>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <strong>{{::lang.hp_groupware}}</strong> - {{::lang.hp_help_page_name}}
+        </div>
+    </div>
+</div>

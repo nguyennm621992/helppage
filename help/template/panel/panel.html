@@ -1,0 +1,29 @@
+<div class="row" ng-repeat="item in list">
+    <div class="col-lg-12">
+        <div class="hpanel hgreen">
+            <div class="panel-heading hbuilt">
+                <div panel-tools>
+                    <div class="panel-tools" ng-init="isEdit = false;">
+                        <a ng-click="exportPdf(item)"><i class="fa fa-file-pdf-o"></i></a>
+                        <a ng-if="!is_viewer" ng-click="remove(item)"><i class="fa fa-times"></i></a>
+                        <!--<a ng-click="closebox()"><i class="fa fa-times"></i></a>-->
+                        <a ng-click="edit(item)" ng-if="!is_viewer" ng-show="!isEdit"><i class="fa fa-edit"></i></a>
+                        <a ng-click="save(item)" ng-if="!is_viewer" ng-show="isEdit"><i class="fa fa-save"></i></a>
+                        <a ng-click="cancel(item)" ng-if="!is_viewer" ng-show="isEdit"><i class="pe-7s-close-circle"></i></a>
+                    </div>
+                </div>
+                <a draggable="false" class="article-title">
+                    <span ng-click="showhide($event)" ng-if="!item.editting && item.title != null && item.title.trim() != ''" ng-bind="item.title"></span>
+                    <span ng-if="!item.editting && item.title == null || item.title.trim() == ''">&nbsp;</span>
+                    <input ng-keypress="accessArtTitle(item, $event)" type="text" ng-model="item.edittitle" ng-if="!is_viewer && item.editting"></input>
+                    <i stop-event class="fa fa-wrench" ng-click="editArtTitle(item)" ng-if="!is_viewer && !item.editting"></i>
+                    <i stop-event ng-click="accessArtTitle(item)" ng-if="!is_viewer && item.editting" class="fa fa-check text-success"></i>
+                    <i stop-event ng-click="cancelArtTitle(item)" ng-if="!is_viewer && item.editting" class="fa fa-times text-danger"></i>
+                </a>
+            </div>
+            <div class="panel-body export-always-show">
+                <div id="content_{{item.id}}" ng-bind-html="formatHtml(item.content)"></div>
+            </div>
+        </div>
+    </div>
+</div>

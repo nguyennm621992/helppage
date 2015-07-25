@@ -1,0 +1,38 @@
+<div class="color-line"></div>
+<div class="pull-left m">
+    <a ui-sref="help.menu({'menuId': ''})" ng-click="splash()" class="btn btn-primary">{{::lang.hp_back_help}}</a>
+</div>
+
+<div class="login-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center m-b-md">
+                <h3>{{::lang.hp_login_app}}</h3>
+                <small>{{::lang.hp_login_title}}</small>
+            </div>
+            <div class="hpanel">
+                <div class="panel-body">
+                    <form name="loginForm">
+                        <div class="form-group">
+                            <label class="control-label" for="username">{{::lang.hp_username}}</label>
+                            <input ng-model="loginInfo.username" type="text" placeholder="Username" title="Please enter you username" required name="username" class="form-control">
+                            <span class="help-block small">{{::lang.hp_unique_username}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="password">{{::lang.hp_password}}</label>
+                            <input ng-model="loginInfo.password" type="password" title="Please enter your password" placeholder="******" required name="password" class="form-control">
+                            <span class="help-block small">{{::lang.hp_strong_password}}</span>
+                        </div>
+                        <button ng-disabled="loginForm.$invalid" class="btn btn-success btn-block" ng-click="login()">{{::lang.hp_login}}</button>
+                        <a class="btn btn-default btn-block" ui-sref="help.menu({'menuId': 'register'})">{{::lang.hp_register}}</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <strong>{{::lang.hp_groupware}}</strong> - {{::lang.hp_help_page_name}}
+        </div>
+    </div>
+</div>

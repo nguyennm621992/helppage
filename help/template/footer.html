@@ -1,0 +1,42 @@
+<div class="content">
+    <div class="row text-center">
+        <div class="col-md-6 col-md-offset-3">
+            <h2 ng-bind-html="formatHtml(lang.hp_opinion_title)"></h2>
+            <p>{{::lang.hp_opinion_subtitle}}</p>
+        </div>
+    </div>
+    <div class="row text-center m-t-lg">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="form-horizontal ng-pristine ng-valid" method="" action="">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" ng-bind-html="formatHtml(lang.hp_opinion_helpful)"></label>
+                    <div class="col-sm-8">
+                        <div class="radio checkbox-inline">
+                            <label> <input icheck type="radio" name="radioYesNo" ng-model="opinionForm.helpful" value="Y"> {{::lang.common_yes_msg}} </label>
+                        </div>
+                        <div class="radio checkbox-inline">
+                            <label> <input icheck type="radio" name="radioYesNo" ng-model="opinionForm.helpful" value="N"> {{::lang.common_no_msg}} </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-left" ng-if="opinionForm.helpful != undefined && opinionForm.helpful === 'N'">
+                    <div class="checkbox">
+                        <label> <input icheck type="checkbox" ng-model="opinionForm.accurate"> {{::lang.hp_no_accur}} </label>
+                    </div>
+                    <div class="checkbox">
+                        <label> <input icheck type="checkbox" ng-model="opinionForm.depth"> {{::lang.hp_no_depth}} </label>
+                    </div>
+                    <div class="checkbox">
+                        <label> <input icheck type="checkbox" ng-model="opinionForm.more_examples"> {{::lang.hp_need_exam}} </label>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="opinionForm.helpful != undefined">
+                    <textarea ng-model="opinionForm.message" class="form-control" rows="3" name="message" placeholder="{{::lang.hp_tell_more}}"></textarea>
+                </div>
+                <div class="form-group" ng-if="opinionForm.helpful != undefined">
+                    <button ng-click="sendOpinionMsg()" type="button" class="btn btn-success">{{::lang.hp_send_msg}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
