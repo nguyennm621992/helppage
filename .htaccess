@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteCond $1 !^(index\.php|images|docs|data|include|lib|uploads|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+<IfModule mod_php5.c>
+php_value max_input_vars 5000
+php_value suhosin.post.max_vars 5000
+php_value suhosin.request.max_vars 5000
+</IfModule>
